@@ -1,8 +1,7 @@
 #include "AllHeader.h"
 using namespace std;
 
-class Timer
-{
+class Timer{
 private:
     int total;
 public:

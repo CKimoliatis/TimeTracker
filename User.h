@@ -20,8 +20,9 @@ struct UserInfo{
     char name[15];
     char password[15];
     int totalTime;
+    bool active;
     
-    UserInfo() : name(""), password(""), totalTime(0) {}
+    UserInfo() : name(""), password(""), totalTime(0), active(true) {}
 };
 class User{
 private:   
@@ -90,7 +91,7 @@ public:
         while(file.read(reinterpret_cast<char*>(temp),sizeof(UserInfo))){
             if(strcmp(temp->name,info->name) == 0 && strcmp(temp->password, info->password) == 0){
                 cout << "\nWelcome back " << temp->name << "!" << endl;
-                info->totalTime = temp->totalTime; //Need to change in my storefront
+                info = temp; //Need to change in my storefront
                 userFound = true;
             }else if(strcmp(temp->name,info->name) == 0 && strcmp(temp->password, info->password) != 0){
                 do{
@@ -98,7 +99,7 @@ public:
                     cin >> info->password;
                     userFound = true;
                 }while(strcmp(temp->password, info->password) != 0);
-                info->totalTime = temp->totalTime;
+                info = temp;
             }
         }
         file.close();
