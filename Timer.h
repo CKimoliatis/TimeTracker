@@ -1,14 +1,13 @@
-#include <chrono>
-#include <iostream>
+#include "AllHeader.h"
 using namespace std;
 
 class Timer
 {
 private:
     int total;
-
 public:
     Timer() = default;
+
     void start()
     {
         auto start = chrono::steady_clock::now();
@@ -37,11 +36,14 @@ public:
 
     void print()
     {
-        int hours, minutes, seconds;
-        hours = total / 3600;
-        total %= 3600;
-        minutes = total / 60;
-        seconds = total % 60;
-        cout << "Total elapsed time: " << hours << " hours, " << minutes << " minutes, " << seconds << " seconds\n";
+        int hours, minutes, seconds, temp;
+        temp = total;
+
+        hours = temp / 3600;
+        temp %= 3600;
+        minutes = temp / 60;
+        seconds = temp % 60;
+
+        cout << "Session elapsed time: " << hours << " hours, " << minutes << " minutes, " << seconds << " seconds\n";
     }
 };

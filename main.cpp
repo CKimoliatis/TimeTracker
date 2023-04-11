@@ -1,22 +1,24 @@
-#include <chrono>
-#include <iostream>
+#include "AllHeader.h"
 #include "Timer.h"
+#include "User.h"
 using namespace std;
 
-class User{
-private:   
-    char username[15];
-    char password[15];
-    int totalTime;
-public:
-    User() = default;
-
-};
-
-int main()
-{
-    Timer *timer = new Timer();
+int main(){
+    string n, p;
+    cout << "Enter username:\n";
+    cin>>n;
+    cout << "Enter password:\n";
+    cin>>p;
+    User* user = new User(n, p);
+    user->verifyUser();
+    Timer* timer = new Timer();
     timer->start();
-    delete timer;
+    int totalTime = timer->getTotal() + user->getTime();
+    user->setTime(totalTime);
+    user->updateUserTime();
+    user->printUser();
+
+    
+    delete user;
     return 0;
 }
