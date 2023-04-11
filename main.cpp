@@ -26,11 +26,8 @@ int main(){
         user->updateUserTime();
         user->printUser();
         delete user;
+        delete timer;
     }
-    
-
-    
-    
     return 0;
 }
 
