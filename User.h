@@ -61,14 +61,17 @@ public:
     void updateUserTime() {
         fstream file("users.bin", ios::binary | ios::in | ios::out);
 
-        UserInfo temp;
+        char buffer[sizeof(UserInfo)];
         bool userFound = false;
 
-        while (file.read(reinterpret_cast<char*>(&temp), sizeof(UserInfo))) {
-            if (strcmp(temp.name, info->name) == 0 && strcmp(temp.password, info->password) == 0) {
-                temp.totalTime = info->totalTime;
+        while (file.read(buffer, sizeof(UserInfo))) {
+            UserInfo* temp = reinterpret_cast<UserInfo*>(buffer);
+
+            if (strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) == 0) {
+                temp->totalTime = info->totalTime;
                 file.seekp(-static_cast<int>(sizeof(UserInfo)), ios::cur);
-                file.write(reinterpret_cast<const char*>(&temp), sizeof(UserInfo));
+                memcpy(buffer, temp, sizeof(UserInfo));
+                file.write(buffer, sizeof(UserInfo));
                 userFound = true;
                 break;
             }
@@ -81,7 +84,83 @@ public:
         file.close();
     }
 
+    /*void updateUserTime(int time) {
+        fstream file("users.bin", ios::binary | ios::in | ios::out);
+
+        UserInfo* temp = new UserInfo();
+        bool userFound = false;
+
+        while (file.read(reinterpret_cast<char*>(temp), sizeof(UserInfo))) {
+            if (strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) == 0) {
+                temp->totalTime += time;
+                file.seekp(-static_cast<int>(sizeof(UserInfo)), ios::cur);
+                file.write(reinterpret_cast<char*>(temp), sizeof(UserInfo));
+                userFound = true;
+                info->totalTime += time;
+                break;
+            }
+        }
+
+        if (!userFound) {
+            cout << "User not found in file." << endl;
+        }
+
+        file.close();
+        delete temp;
+    }*/
+
+
     void verifyUser()
+    {
+        bool userFound = false;
+        fstream file("users.bin", ios::binary | ios::in);
+
+        // Loop through each UserInfo struct in the file
+        UserInfo *temp = new UserInfo;
+        while(file.read(reinterpret_cast<char*>(temp), sizeof(UserInfo))){
+            if(strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) == 0){
+                cout << "\nWelcome back " << temp->name << "!" << endl;
+                info = temp; // Need to change in my storefront
+                userFound = true;
+                break;
+            } else if(strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) != 0){
+                do{
+                    cout << "Wrong Password Please Reenter Password:\n";
+                    cin >> info->password;
+                    userFound = true;
+                }while(strcmp(temp->password, info->password) != 0);
+                info = temp;
+                break;
+            }
+        }
+        file.close();
+
+        // If user not found, add them to the file
+        if (!userFound){
+            file.open("users.bin", ios::binary | ios::app);
+            if (!file){
+                cerr << "Error opening output file." << endl;
+                delete temp;
+                return;
+            }
+            
+            UserInfo newUser; // Create a new user object for the new user
+            strcpy(newUser.name, info->name);
+            strcpy(newUser.password, info->password);
+            newUser.totalTime = info->totalTime;
+            newUser.active = 1;
+
+            file.write(reinterpret_cast<char*>(&newUser), sizeof(UserInfo));
+            cout << "User added to file." << endl;
+
+            file.close();
+        }
+
+        delete temp;
+    }
+
+
+    /*void verifyUser()
     {
         bool userFound = false;
         fstream file("users.bin", ios::binary | ios::in);
@@ -122,7 +201,7 @@ public:
         }
 
         delete temp;
-    }
+    }*/
 };
 
 
