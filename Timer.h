@@ -21,7 +21,6 @@ public:
                 auto now = chrono::steady_clock::now();
                 auto elapsed = chrono::duration_cast<chrono::seconds>(now - start);
                 total = (int)elapsed.count();
-                total += 7456; // testing purposes
                 break;
             }
         }

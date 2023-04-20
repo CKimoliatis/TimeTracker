@@ -63,10 +63,9 @@ public:
 
         char buffer[sizeof(UserInfo)];
         bool userFound = false;
-
+        
         while (file.read(buffer, sizeof(UserInfo))) {
             UserInfo* temp = reinterpret_cast<UserInfo*>(buffer);
-
             if (strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) == 0) {
                 temp->totalTime = info->totalTime;
                 file.seekp(-static_cast<int>(sizeof(UserInfo)), ios::cur);
@@ -75,6 +74,7 @@ public:
                 userFound = true;
                 break;
             }
+            delete temp;
         }
 
         if (!userFound) {
@@ -82,6 +82,7 @@ public:
         }
 
         file.close();
+        
     }
 
     /*void updateUserTime(int time) {
@@ -120,7 +121,8 @@ public:
         while(file.read(reinterpret_cast<char*>(temp), sizeof(UserInfo))){
             if(strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) == 0){
                 cout << "\nWelcome back " << temp->name << "!" << endl;
-                info = temp; // Need to change in my storefront
+                info->active = temp->active;
+                info->totalTime = temp->totalTime;
                 userFound = true;
                 break;
             } else if(strcmp(temp->name, info->name) == 0 && strcmp(temp->password, info->password) != 0){
@@ -129,7 +131,8 @@ public:
                     cin >> info->password;
                     userFound = true;
                 }while(strcmp(temp->password, info->password) != 0);
-                info = temp;
+                info->active = temp->active;
+                info->totalTime = temp->totalTime;
                 break;
             }
         }
