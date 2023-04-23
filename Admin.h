@@ -33,7 +33,7 @@ public:
         }
         users.clear();
     }
-     void adminPrompt(){
+    void adminPrompt(){
         int choice;
         do{
             cout << "\nMenu\n";
