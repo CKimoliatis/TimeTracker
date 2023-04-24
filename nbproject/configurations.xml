@@ -16,6 +16,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Admin.cpp</itemPath>
+      <itemPath>Timer.cpp</itemPath>
+      <itemPath>User.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -40,11 +43,17 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="Admin.cpp" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="Admin.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="AllHeader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Timer.cpp" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="User.cpp" ex="false" tool="0" flavor2="0">
       </item>
       <item path="User.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -71,11 +80,17 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Admin.cpp" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="Admin.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="AllHeader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Timer.cpp" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="User.cpp" ex="false" tool="0" flavor2="0">
       </item>
       <item path="User.h" ex="false" tool="3" flavor2="0">
       </item>
